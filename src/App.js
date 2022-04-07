@@ -3,6 +3,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Feed from './pages/Feed';
 import Profile from './pages/Profile';
+import NotFound from './pages/NotFound';
 
 const Layout = () => {
   return (
@@ -34,6 +35,7 @@ const App = () => {
         <Route path='profile' element={<Profile />} />
         <Route path='login' element={<Login />} />
         <Route path='register' element={<Register />} />
+        <Route path='*' element={<NotFound />} />
       </Route>
     </Routes>
   );
