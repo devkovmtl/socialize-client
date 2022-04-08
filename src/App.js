@@ -8,7 +8,7 @@ import NotFound from './pages/NotFound';
 const Layout = () => {
   return (
     <div>
-      <ul>
+      {/* <ul>
         <li>
           <Link to='/'>Social Club</Link>
         </li>
@@ -21,7 +21,7 @@ const Layout = () => {
         <li>
           <Link to='register'>Register</Link>
         </li>
-      </ul>
+      </ul> */}
       <Outlet />
     </div>
   );
