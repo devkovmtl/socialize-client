@@ -22,7 +22,7 @@ const Register = () => {
   };
 
   return (
-    <div className='min-h-screen max-w-screen-xl px-4 py-16 mx-auto sm:px-6 lg:px-8 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500'>
+    <div className='min-h-screen min-w-screen-xl px-4 py-4 mx-auto sm:px-6 lg:px-8 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500'>
       <div className='max-w-lg mx-auto'>
         <PageTitle title='Social Club' color='text-white' />
         <PageDescription
