@@ -13,7 +13,6 @@ const Register = () => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm();
 
@@ -26,7 +25,7 @@ const Register = () => {
       <div className='max-w-lg mx-auto'>
         <PageTitle title='Social Club' color='text-white' />
         <PageDescription
-          description='Register to share your posts with your friends and the world.'
+          description='Join the community and share your posts with your friends and the world.'
           color='text-gray-800'
         />
         <form
@@ -115,7 +114,7 @@ const Register = () => {
           </button>
 
           <p className='text-sm text-center text-gray-500'>
-            Do you have an account?
+            Do you have an account?{' '}
             <Link className='underline' to='/login'>
               Sign in
             </Link>
