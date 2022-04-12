@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { ACCESS_TOKEN_KEY, LOGIN_URL, USER_KEY } from '../constants';
+import checkIsTokenExpires from '../helpers/checkIsTokenExpires';
 
 export const login = createAsyncThunk(
   'auth/login',
@@ -18,13 +19,7 @@ export const login = createAsyncThunk(
   }
 );
 
-const initialState = {
-  status: 'idle', // idle, pending, fulfilled, rejected
-  isLoggedIn: false,
-  user: JSON.parse(localStorage.getItem(USER_KEY)) || null,
-  accessToken: localStorage.getItem(ACCESS_TOKEN_KEY) || null,
-  error: null,
-};
+const initialState = createInitialAuthState();
 
 export const authSlice = createSlice({
   name: 'auth',
@@ -71,3 +66,37 @@ export const authSlice = createSlice({
 export const { logout } = authSlice.actions;
 
 export default authSlice.reducer;
+
+function createInitialAuthState() {
+  const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY);
+  if (!accessToken) {
+    localStorage.removeItem(USER_KEY);
+    return {
+      isLoggedIn: false,
+      user: {},
+      accessToken: null,
+      status: 'idle',
+      error: null,
+    };
+  }
+
+  if (checkIsTokenExpires(accessToken)) {
+    localStorage.removeItem(USER_KEY);
+    localStorage.removeItem(ACCESS_TOKEN_KEY);
+    return {
+      isLoggedIn: false,
+      user: {},
+      accessToken: null,
+      status: 'idle',
+      error: null,
+    };
+  }
+
+  return {
+    status: 'fulfilled', // idle, pending, fulfilled, rejected
+    isLoggedIn: !!localStorage.getItem(ACCESS_TOKEN_KEY),
+    user: JSON.parse(localStorage.getItem(USER_KEY)) || null,
+    accessToken: localStorage.getItem(ACCESS_TOKEN_KEY) || null,
+    error: null,
+  };
+}
