@@ -1,4 +1,8 @@
-const Spinner = ({ width, height, color }) => (
+const Spinner = ({
+  width = 'w-10',
+  height = 'h-10',
+  color = 'fill-orange-600',
+}) => (
   <svg
     role='status'
     className={`inline mr-2 ${width} ${height} text-gray-200 animate-spin dark:text-gray-200 ${color}`}
