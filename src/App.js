@@ -1,38 +1,34 @@
-import { Routes, Route, Outlet, Link } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
+// Protect the routes with the RequireAuth component
+import { RequireAuth } from './helpers';
+// Pages
+import Layout from './pages/Layout';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Feed from './pages/Feed';
 import Profile from './pages/Profile';
 import NotFound from './pages/NotFound';
 
-const Layout = () => {
-  return (
-    <div>
-      {/* <ul>
-        <li>
-          <Link to='/'>Social Club</Link>
-        </li>
-        <li>
-          <Link to='profile'>Profile</Link>
-        </li>
-        <li>
-          <Link to='login'>Login</Link>
-        </li>
-        <li>
-          <Link to='register'>Register</Link>
-        </li>
-      </ul> */}
-      <Outlet />
-    </div>
-  );
-};
-
 const App = () => {
   return (
     <Routes>
       <Route path='/' element={<Layout />}>
-        <Route index element={<Feed />} />
-        <Route path='profile' element={<Profile />} />
+        <Route
+          index
+          element={
+            <RequireAuth>
+              <Feed />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path='profile'
+          element={
+            <RequireAuth>
+              <Profile />
+            </RequireAuth>
+          }
+        />
         <Route path='login' element={<Login />} />
         <Route path='register' element={<Register />} />
         <Route path='*' element={<NotFound />} />
