@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import {
   LabelForm,
   InputField,
@@ -21,12 +21,15 @@ const Login = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  let from = location.state?.from?.pathname || '/';
 
   const onSubmit = async (data) => {
     const { username, password } = data;
@@ -35,7 +38,9 @@ const Login = () => {
       const response = await dispatch(login({ username, password })).unwrap();
       setIsLoading(false);
       if (response.success) {
-        navigate('/');
+        // replace true we don't create another entry in
+        // browser history
+        navigate(from, { replace: true });
       } else {
         setError(response.message);
       }
