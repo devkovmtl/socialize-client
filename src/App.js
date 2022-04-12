@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 // Protect the routes with the RequireAuth component
-import { RequireAuth } from './helpers';
+import { RequireAuth, IsLoggedIn } from './helpers';
 // Pages
 import Layout from './pages/Layout';
 import Login from './pages/Login';
@@ -29,8 +29,22 @@ const App = () => {
             </RequireAuth>
           }
         />
-        <Route path='login' element={<Login />} />
-        <Route path='register' element={<Register />} />
+        <Route
+          path='login'
+          element={
+            <IsLoggedIn>
+              <Login />
+            </IsLoggedIn>
+          }
+        />
+        <Route
+          path='register'
+          element={
+            <IsLoggedIn>
+              <Register />
+            </IsLoggedIn>
+          }
+        />
         <Route path='*' element={<NotFound />} />
       </Route>
     </Routes>
