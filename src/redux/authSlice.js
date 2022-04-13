@@ -1,7 +1,26 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { ACCESS_TOKEN_KEY, LOGIN_URL, USER_KEY } from '../constants';
+import {
+  ACCESS_TOKEN_KEY,
+  LOGIN_URL,
+  REGISTER_URL,
+  USER_KEY,
+} from '../constants';
 import checkIsTokenExpires from '../helpers/checkIsTokenExpires';
+
+export const register = createAsyncThunk(
+  'auth/register',
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(REGISTER_URL, data);
+      return response.data;
+    } catch (error) {
+      console.log(error.response.data);
+      const { success, message, errors } = error.response.data;
+      return rejectWithValue({ success, message, errors });
+    }
+  }
+);
 
 export const login = createAsyncThunk(
   'auth/login',
@@ -58,7 +77,36 @@ export const authSlice = createSlice({
         state.isLoggedIn = false;
         state.user = {};
         state.accessToken = null;
-        state.error = action.payload.message || 'Login failed';
+        state.error = action.payload.message || 'Registration failed';
+        localStorage.removeItem(ACCESS_TOKEN_KEY);
+        localStorage.removeItem(USER_KEY);
+      });
+    builder
+      .addCase(register.pending, (state, action) => {
+        state.status = 'pending';
+        state.isLoggedIn = false;
+        state.user = {};
+        state.error = null;
+      })
+      .addCase(register.fulfilled, (state, action) => {
+        // action.payload => success, message, user, accessToken
+        state.status = 'fulfilled';
+        state.isLoggedIn = true;
+        state.user = action.payload.user;
+        state.accessToken = action.payload.accessToken;
+        state.error = null;
+        // store the token
+        localStorage.setItem(ACCESS_TOKEN_KEY, action.payload.accessToken);
+        localStorage.setItem(USER_KEY, JSON.stringify(action.payload.user));
+      })
+      .addCase(register.rejected, (state, action) => {
+        state.status = 'rejected';
+        state.isLoggedIn = false;
+        state.user = {};
+        state.accessToken = null;
+        state.error = action.payload.message || 'Registration failed';
+        localStorage.removeItem(ACCESS_TOKEN_KEY);
+        localStorage.removeItem(USER_KEY);
       });
   },
 });
