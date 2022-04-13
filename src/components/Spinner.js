@@ -1,11 +1,7 @@
-const Spinner = ({
-  width = 'w-10',
-  height = 'h-10',
-  color = 'fill-orange-600',
-}) => (
+const Spinner = ({ width = 'w-10', height = 'h-10' }) => (
   <svg
     role='status'
-    className={`inline mr-2 ${width} ${height} text-gray-200 animate-spin dark:text-gray-200 ${color}`}
+    className={`inline mr-2 ${width} ${height} animate-spin text-gray-200 dark:text-gray-600 fill-purple-600`}
     viewBox='0 0 100 101'
     fill='none'
     xmlns='http://www.w3.org/2000/svg'
