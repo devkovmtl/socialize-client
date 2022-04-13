@@ -9,6 +9,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Feed from './pages/Feed';
 import Profile from './pages/Profile';
+import Settings from './pages/Settings';
 import NotFound from './pages/NotFound';
 import axios from 'axios';
 import { ACCESS_TOKEN_KEY } from './constants';
@@ -51,6 +52,14 @@ const App = () => {
           element={
             <RequireAuth>
               <Profile />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path='settings'
+          element={
+            <RequireAuth>
+              <Settings />
             </RequireAuth>
           }
         />

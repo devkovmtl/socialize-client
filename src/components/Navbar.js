@@ -21,7 +21,7 @@ const NavLink = ({ to, label, activePath }) => {
 
 const Navbar = () => {
   return (
-    <nav className='bg-gradient-to-br from-pink-500 to-orange-400 px-2 sm:px-4 py-3 shadow-lg'>
+    <nav className='fixed top-0 left-0 w-full z-10 bg-gradient-to-br from-pink-500 to-orange-400 px-2 sm:px-4 py-3 shadow-lg'>
       <div className='container flex justify-between items-center mx-auto'>
         <Link to='/'>
           <span className='text-white font-lobster self-center text-3xl font-bold'>
@@ -31,7 +31,7 @@ const Navbar = () => {
 
         <ul className='text-white flex space-x-2 md:space-x-8'>
           <NavLink to='profile' label='Profile' activePath='/profile' />
-          <NavLink to='/' label='Settings' activePath='/' />
+          <NavLink to='settings' label='Settings' activePath='/settings' />
         </ul>
       </div>
     </nav>
