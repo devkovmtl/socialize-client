@@ -28,4 +28,7 @@ export const FormRulesOptions = {
         'Password must contain at least one lowercase letter, one uppercase letter, one number, and one special character',
     },
   },
+  passwordConfirmation: {
+    required: 'Password confirmation is required',
+  },
 };
