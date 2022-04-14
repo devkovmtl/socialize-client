@@ -1,7 +1,7 @@
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 // Protect the routes with the RequireAuth component
-import { RequireAuth, IsLoggedIn } from './helpers';
+import { RequireAuth, IsLoggedIn, checkIsTokenExpires } from './helpers';
 import { logout } from './redux/authSlice';
 // Pages
 import Layout from './pages/Layout';
@@ -35,6 +35,13 @@ const App = () => {
       }
     }
   );
+
+  if (localStorage.getItem(ACCESS_TOKEN_KEY)) {
+    if (checkIsTokenExpires(localStorage.getItem(ACCESS_TOKEN_KEY))) {
+      dispatch(logout());
+      navigate('/login');
+    }
+  }
 
   return (
     <Routes>
