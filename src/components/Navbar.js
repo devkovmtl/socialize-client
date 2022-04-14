@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 const NavLink = ({ to, label, activePath }) => {
   const location = useLocation();
   const isActive = location.pathname === activePath;
-  const isActiveClasses = 'font-semibold text-pink-600 bg-white';
+  const isActiveClasses = 'font-semibold text-purple-600 bg-white';
 
   return (
     <li>
@@ -11,7 +11,7 @@ const NavLink = ({ to, label, activePath }) => {
         to={to}
         className={`px-5 py-2.5 rounded-md ${
           isActive ? isActiveClasses : ''
-        }  hover:text-pink-600 transition-all`}
+        }  hover:text-purple-600 transition-all`}
       >
         {label}
       </Link>

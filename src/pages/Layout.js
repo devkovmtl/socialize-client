@@ -8,7 +8,7 @@ const Layout = () => {
   return (
     <div>
       {isLoggedIn && <Navbar />}
-      <div className={`${isLoggedIn ? 'mt-16' : ''}`}>
+      <div className={`${isLoggedIn ? 'mt-28 sm:mt-16' : ''}`}>
         <Outlet />
       </div>
     </div>
