@@ -4,3 +4,5 @@ export { default as PageDescription } from './PageDescription';
 export { default as LabelForm } from './LabelForm';
 export { default as InputField } from './InputField';
 export { default as InputFieldError } from './InputFieldError';
+export { default as NewPostFeed } from './NewPostFeed';
+export { default as FeedPostCard } from './FeedPostCard';
