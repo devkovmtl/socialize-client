@@ -1,3 +1,4 @@
+export { default as AvatarImage } from './AvatarImage';
 export { default as Spinner } from './Spinner';
 export { default as PageTitle } from './PageTitle';
 export { default as PageDescription } from './PageDescription';
