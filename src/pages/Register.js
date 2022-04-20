@@ -10,6 +10,7 @@ import {
   PageTitle,
   PageDescription,
   Spinner,
+  AvatarImage,
 } from '../components';
 import { FormRulesOptions } from '../constants';
 import { register as registerUser } from '../redux/authSlice';
@@ -26,29 +27,37 @@ const Register = () => {
     register,
     handleSubmit,
     setError,
+    watch,
     formState: { errors },
   } = useForm();
 
+  const watchAvatar = watch('avatar');
+
   const onSubmit = async (data) => {
-    const { username, email, password, passwordConfirmation } = data;
+    const { password, passwordConfirmation } = data;
     if (password !== passwordConfirmation) {
       setError('passwordConfirmation', 'Password confirmation does not match');
       return;
     }
     setIsLoading(true);
     try {
-      const response = await dispatch(
-        registerUser({ username, email, password, passwordConfirmation })
-      ).unwrap();
+      const formData = new FormData();
+      const file = data.avatar[0];
+      formData.append('avatar', file);
+      formData.append('username', data.username);
+      formData.append('email', data.email);
+      formData.append('password', password);
+      formData.append('passwordConfirmation', passwordConfirmation);
+      const response = await dispatch(registerUser(formData)).unwrap();
       setIsLoading(false);
       if (response.success) {
         navigate('/', { replace: true });
       } else {
-        setBackendError(response.message);
+        setBackendError(response.message || 'Registration failed');
       }
     } catch (error) {
       setIsLoading(false);
-      setBackendError(error.message);
+      setBackendError(error.message || 'Something went wrong');
     }
   };
 
@@ -68,11 +77,35 @@ const Register = () => {
           <form
             className='p-8 mt-6 mb-0 space-y-4 rounded-lg shadow-2xl bg-slate-100'
             onSubmit={handleSubmit(onSubmit)}
+            encType='multipart/form-data'
           >
             <p className='text-center text-lg font-medium'>Sign Up</p>
             {errorBackend && (
               <p className='text-red-600 text-xs'>{errorBackend}</p>
             )}
+
+            <div className='flex items-center'>
+              <div className='shrink-0 mr-2'>
+                <AvatarImage
+                  src={
+                    watchAvatar && watchAvatar[0]
+                      ? URL.createObjectURL(watchAvatar[0])
+                      : 'http://www.gravatar.com/avatar?d=mm&s=140'
+                  }
+                />
+              </div>
+              <label className='block'>
+                <span className='sr-only'>Choose profile photo</span>
+                <input
+                  type='file'
+                  id='avatar'
+                  name='avatar'
+                  className='block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100'
+                  {...register('avatar')}
+                />
+              </label>
+            </div>
+
             <div>
               <LabelForm
                 htmlFor='username'
