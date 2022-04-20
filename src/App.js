@@ -33,6 +33,7 @@ const App = () => {
         dispatch(logout());
         navigate('/login');
       }
+      return Promise.reject(error);
     }
   );
 
