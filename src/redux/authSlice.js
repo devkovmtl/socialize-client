@@ -12,12 +12,15 @@ export const register = createAsyncThunk(
   'auth/register',
   async (data, { rejectWithValue }) => {
     try {
-      const response = await axios.post(REGISTER_URL, data);
+      const response = await axios.post(REGISTER_URL, data, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
       return response.data;
     } catch (error) {
-      console.log(error.response.data);
-      const { success, message, errors } = error.response.data;
-      return rejectWithValue({ success, message, errors });
+      return rejectWithValue({
+        success: false,
+        message: error.response.data.message || 'Login Failed',
+      });
     }
   }
 );
@@ -27,13 +30,12 @@ export const login = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const response = await axios.post(LOGIN_URL, data);
-      //   const { success, message, user, accessToken } = response.data;
-      return response.data;
+      return response?.data;
     } catch (error) {
-      // error.response.status
-      // error.response.data
-      const { success, message, errors } = error.response.data;
-      return rejectWithValue({ success, message, errors });
+      return rejectWithValue({
+        success: false,
+        message: error.response.data.message || 'Login Failed',
+      });
     }
   }
 );
@@ -104,7 +106,7 @@ export const authSlice = createSlice({
         state.isLoggedIn = false;
         state.user = {};
         state.accessToken = null;
-        state.error = action.payload.message || 'Registration failed';
+        state.error = action?.payload.message || 'Registration failed';
         localStorage.removeItem(ACCESS_TOKEN_KEY);
         localStorage.removeItem(USER_KEY);
       });
