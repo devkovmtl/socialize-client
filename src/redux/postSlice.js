@@ -2,6 +2,20 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { POSTS_URL } from '../constants';
 
+export const addNewPost = createAsyncThunk(
+  'posts/addNewPost',
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(POSTS_URL, data);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || 'Failed to add new post'
+      );
+    }
+  }
+);
+
 export const fetchPosts = createAsyncThunk(
   'posts/fetchPosts',
   async (_, { rejectWithValue }) => {
@@ -38,6 +52,9 @@ export const postSlice = createSlice({
         state.status = 'rejected';
         state.error = action.payload;
       });
+    builder.addCase(addNewPost.fulfilled, (state, action) => {
+      state.posts.unshift(action.payload.post);
+    });
   },
 });
 
