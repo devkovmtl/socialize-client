@@ -1,12 +1,10 @@
 const FeedPostCard = ({ post }) => {
   console.log(post);
+  const { content, totalLikes, totalComments } = post;
   return (
-    <div className='block p-4 max-w-md bg-white border border-gray-300 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-600'>
+    <div className='block p-4 w-full bg-white border border-gray-300 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-600'>
       <p className='text-normal font-medium text-gray-700 dark:text-gray-400'>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. In officiis
-        deleniti ex ipsam cumque hic ab eius. Consequatur cupiditate fuga
-        ducimus incidunt, autem quibusdam debitis ea libero distinctio,
-        asperiores id?
+        {content}
       </p>
       {/* Comments like */}
       <div className='w-1/2 flex mt-4 items-center justify-between ml-auto'>
@@ -30,7 +28,7 @@ const FeedPostCard = ({ post }) => {
           </span>
           {/* Number */}
           <span className='text-gray-700 group-hover:text-red-500 ml-1 text-xs'>
-            1120
+            {totalLikes}
           </span>
         </button>
 
@@ -54,7 +52,7 @@ const FeedPostCard = ({ post }) => {
           </span>
           {/* Number */}
           <span className='text-gray-700 group-hover:text-blue-500 ml-1'>
-            152
+            {totalComments}
           </span>
         </button>
       </div>
