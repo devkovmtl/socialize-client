@@ -10,3 +10,4 @@ export { default as FeedPostCard } from './FeedPostCard';
 export { default as NavLink } from './NavLink';
 export { default as MobileNavLink } from './MobileNavLink';
 export { default as MobileButtonToggle } from './MobileButtonToggle';
+export { default as UserCardList } from './UserCardList';

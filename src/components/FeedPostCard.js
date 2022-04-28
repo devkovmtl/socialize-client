@@ -1,5 +1,4 @@
-const FeedPostCard = ({ post }) => {
-  console.log(post);
+const FeedPostCard = ({ post, author }) => {
   const { content, totalLikes, totalComments } = post;
   return (
     <div className='block p-4 w-full bg-white border border-gray-300 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-600'>
